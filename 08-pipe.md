@@ -49,7 +49,7 @@ Un pipe **pur** (défaut) ne se recalcule que si son entrée change **par réfé
 
 ## Approfondir
 
-- [Pipes — angular.dev](https://angular.dev/guide/pipes) (en anglais)
+- [Pipes — angular.dev](https://angular.dev/guide/templates/pipes) (en anglais)
 - Cours Angular : chapitre [07 · Directives et pipes](https://github.com/DiginamicAcademy/Angular/blob/main/07-directives-pipes.md)
 
 ---

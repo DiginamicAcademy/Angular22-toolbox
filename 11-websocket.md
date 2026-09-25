@@ -59,7 +59,7 @@ export class Notifications {
 ```
 
 - `webSocket()` crée un `WebSocketSubject` : on y `next()` pour envoyer, on s'y abonne pour recevoir.
-- Chaque message **valide** aussi à la frontière : un `parse`-like, comme pour HTTP (fiche [09](09-appels-http.md)).
+- Les messages arrivent du réseau comme une réponse HTTP : la validation à la frontière s'applique aussi ici (fiche [09](09-appels-http.md)).
 
 ### 3. Afficher les messages
 
@@ -76,13 +76,19 @@ export class Notifications {
 Un service vit autant que l'application ; un socket qui appartient à un **composant** doit mourir avec lui :
 
 ```ts
-protected readonly messages = toSignal(
-  this.socket$.pipe(takeUntilDestroyed(this.destroyRef)),
-  { initialValue: [] as ChatMessage[] },
-);
+export class NotificationsPage {
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly socket$ = webSocket<Notification>('/ws/notifications');
+
+  protected readonly messages = toSignal(this.socket$, { initialValue: [] as Notification[] });
+
+  constructor() {
+    this.destroyRef.onDestroy(() => this.socket$.complete()); // ferme le socket avec la page
+  }
+}
 ```
 
-`takeUntilDestroyed` (de `@angular/core/rxjs-interop`) coupe l'abonnement — et le socket — à la destruction du composant.
+`DestroyRef` remplace le couple `ngOnDestroy` / `OnDestroy` ; `complete()` ferme le sujet — et le socket.
 
 ## Pièges courants
 

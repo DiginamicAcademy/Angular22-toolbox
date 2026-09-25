@@ -27,7 +27,7 @@ export class DevCard {
 
 - Les composants sont *standalone* : `imports` liste ce que le template utilise, plus de module à déclarer.
 - Les styles sont **encapsulés** : `.card` dans `dev-card.css` ne touche que ce composant.
-- Angular 22 applique `OnPush` par défaut : un composant n'est revérifié que si l'un de ses signaux change.
+- Angular 22 applique `OnPush` par défaut : quand un signal lu dans le template change, Angular met à jour ce composant, et lui seul.
 - Les entrées sont des **signaux**, l'état dérivé des `computed` : fiches [04 · signal()](04-signal.md) et [05 · computed()](05-computed.md).
 
 ### 2. Les liaisons de template

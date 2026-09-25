@@ -9,15 +9,15 @@ Chaque fiche présente une notion importante du framework : à quoi elle sert, q
 | # | Fiche | Notion |
 |---|---|---|
 | 01 | [L'application](01-app.md) | Bootstrap, composant racine, providers, zoneless |
-| 02 | [Le composant de page](02-composant-page.md) | `@Component`, template, OnPush, cycle de vie |
+| 02 | [Le composant de page](02-composant-page.md) | `@Component`, template, OnPush, entrées / sorties |
 | 03 | [Le routeur](03-routeur.md) | Routes, chargement différé, gardes, paramètres |
 | 04 | [`signal()`](04-signal.md) | État réactif : créer, lire, modifier |
 | 05 | [`computed()`](05-computed.md) | Valeurs dérivées, mémoïsation |
 | 06 | [Les services](06-service.md) | `@Service()`, `inject()`, injection de dépendances |
-| 07 | [Les directives](07-directive.md) | Attribut, structurelle, personnalisée |
+| 07 | [Les directives](07-directive.md) | Attribut, control flow, personnalisée |
 | 08 | [Les pipes](08-pipe.md) | Intégrés, personnalisés, pur / impur |
 | 09 | [Les appels HTTP](09-appels-http.md) | `HttpClient`, `httpResource`, intercepteurs |
-| 10 | [La gestion de session](10-gestion-session.md) | Authentification, gardes, jeton, interceptor |
+| 10 | [La gestion de session](10-gestion-session.md) | Authentification, gardes, jeton, intercepteur |
 | 11 | [WebSocket](11-websocket.md) | Temps réel, reconnexion, signaux |
 | 12 | [Les tests avec Vitest](12-tests-vitest.md) | `ng test`, spec, `TestBed`, couverture |
 
@@ -38,4 +38,4 @@ Chaque fiche suit le même plan :
 - **Pièges courants** — les erreurs classiques de débutant.
 - **Approfondir** — la documentation officielle, et le chapitre du cours qui traite la notion en détail.
 
-Les fiches 10 (session) et 11 (WebSocket) vont au-delà du cours : elles complètent le socle pour des applications réelles, avec l'appui des chapitres 06 (services, HTTP, intercepteur) et 09 (état, persistance).
+Les fiches 10 (session) et 11 (WebSocket) vont au-delà du cours ; la fiche 09 y ajoute les mutations (`POST`) et le transport Fetch. Elles complètent le socle pour des applications réelles, avec l'appui des chapitres 06 (services, HTTP, intercepteur) et 09 (état, persistance).

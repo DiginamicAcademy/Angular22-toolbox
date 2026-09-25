@@ -79,7 +79,7 @@ Angular 22 fonctionne **sans zone.js** (*zoneless*) : la détection de changemen
 
 ## Approfondir
 
-- [Démarrage d'une application — angular.dev](https://angular.dev/guide/startup) (en anglais)
+- [Structure d'un projet — angular.dev](https://angular.dev/reference/configs/file-structure) (en anglais)
 - Cours Angular : chapitre [03 · Les outils et la création du projet](https://github.com/DiginamicAcademy/Angular/blob/main/03-environnement-tooling.md)
 
 ---

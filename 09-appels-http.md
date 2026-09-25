@@ -13,7 +13,7 @@ Parler au serveur, c'est deux gestions : **charger** des données — et en Angu
 ```ts
 @Service()
 export class DevRepository {
-  private readonly remote = httpResource(() => '/data/devs.json', {
+  private readonly remote = httpResource(() => 'data/devs.json', {
     parse: parseDevs,     // type guard : valider à la frontière
     defaultValue: [],
   });
@@ -24,6 +24,7 @@ export class DevRepository {
 ```
 
 - La fonction passée en premier argument est **réactive** : si elle lit un signal et que ce signal change, la requête est relancée. Si elle renvoie `undefined`, aucune requête n'est envoyée.
+- L'URL est **relative**, sans `/` initial : l'application fonctionnera aussi quand elle sera publiée dans un sous-dossier.
 - `parse` reçoit la réponse brute (`unknown`) et renvoie une valeur typée. C'est l'endroit où l'on **valide** les données. Si `parse` lève une erreur, la ressource passe en état d'erreur.
 - **Lire `value()` sur une ressource en erreur lève une exception.** On teste `hasValue()` avant, dans un `computed`.
 - `HttpClient` est disponible par défaut. `provideHttpClient()` ne sert qu'à ajouter des options, comme les intercepteurs.

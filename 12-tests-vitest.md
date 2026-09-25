@@ -51,15 +51,17 @@ describe('Team', () => {
 });
 ```
 
-Quand le service lit une **ressource** (`httpResource`), l'ordre est `tick` → `flush` → `whenStable` : on fait avancer le temps, puis on attend que la ressource se stabilise.
+Un service qui en injecte d'autres (le `Team` de la fiche 06 charge ses devs) exige leurs doublures — `provideHttpClientTesting()` ci-dessous. Quand le service lit une **ressource** (`httpResource`), l'ordre est `tick` → `flush` → `whenStable` : on fait avancer le temps, puis on attend que la ressource se stabilise.
 
 ### 4. Tester un composant
 
 ```ts
-const fixture = TestBed.createComponent(DevCard);
-fixture.componentRef.setInput('dev', devFixture); // alimente une entrée
-fixture.detectChanges();                         // déclenche le rendu
-expect(fixture.componentInstance.inTeam()).toBe(false);
+it('affiche un dev hors équipe', async () => {
+  const fixture = TestBed.createComponent(DevCard);
+  fixture.componentRef.setInput('dev', devFixture); // alimente une entrée
+  await fixture.whenStable();                       // attendre le rendu
+  expect(fixture.componentInstance.inTeam()).toBe(false);
+});
 ```
 
 Avec une ressource dans le composant, `TestBed.tick()` fait avancer requêtes et rendu ensemble.

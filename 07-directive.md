@@ -2,7 +2,7 @@
 
 # Les directives
 
-Une directive change l'apparence ou le comportement d'un élément **existant**, sans créer de balise. Les **directives d'attribut** s'appliquent à un élément (`<span appTypeColor>`) ; les **structurelles** ajoutent ou retirent des morceaux de template — en Angular 22, ce sont `@if`, `@for`, `@defer`.
+Une directive change l'apparence ou le comportement d'un élément **existant**, sans créer de balise. Les **directives d'attribut** s'appliquent à un élément (`<span appTypeColor>`) ; les directives structurelles **historiques** (`*ngIf`, `*ngFor`) ajoutaient ou retiraient du template — en Angular 22, le **control flow** (`@if`, `@for`, `@defer`) les remplace.
 
 ## L'essentiel
 
@@ -44,9 +44,9 @@ export class DevBadge {}
 // <app-dev-badge type="frontend" /> — TypeColor s'applique à l'hôte
 ```
 
-### 3. Les structurelles : le control flow
+### 3. Le control flow remplace les structurelles
 
-`@if`, `@for`, `@switch`, `@defer` sont des directives structurelles intégrées (fiche [02 · Le composant de page](02-composant-page.md)). Les anciennes `*ngIf` / `*ngFor` sont du **code historique** — à savoir lire, à ne plus écrire.
+`@if`, `@for`, `@switch`, `@defer` forment le **control flow** intégré (fiche [02 · Le composant de page](02-composant-page.md)). Les anciennes `*ngIf` / `*ngFor` étaient des directives structurelles — du **code historique** à savoir lire, à ne plus écrire.
 
 ### 4. Le bon choix
 

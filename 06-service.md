@@ -13,7 +13,7 @@ Un service porte la logique et l'état **partagés** : données, appels HTTP, é
 ```ts
 @Service() // ≡ @Injectable({ providedIn: 'root' }) — la forme historique
 export class Team {
-  private readonly repository = inject(DevRepository);
+  private readonly repository = inject(DevRepository); // charge les devs (fiche 09)
   private readonly ids = signal<number[]>([]);
 
   readonly members = computed(() => this.ids().map((id) => this.repository.byId(id)));

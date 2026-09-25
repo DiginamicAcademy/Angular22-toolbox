@@ -20,6 +20,8 @@ readonly members = computed(() => this.ids().map((id) => this.repository.byId(id
 readonly size = computed(() => this.ids().length);
 ```
 
+(`repository` : le service qui charge les données — fiche [09 · Les appels HTTP](09-appels-http.md))
+
 ### 2. Mémoïsé : recalculé seulement si nécessaire
 
 Un `computed` ne se recalcule que si un signal qu'il a lu a changé **et** si on le lit. Dix lectures sans changement, zéro recalcul.
