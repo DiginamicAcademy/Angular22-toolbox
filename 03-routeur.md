@@ -11,7 +11,7 @@ Le routeur associe chaque URL à une page : l'adresse affiche un composant dans 
 `src/app/app.routes.ts`
 
 ```ts
-export const appRoutes: Routes = [
+export const routes: Routes = [
   { path: '', component: DexPage },
   {
     path: 'devs/:id',
@@ -38,7 +38,7 @@ flowchart LR
 Le routeur est activé dans `src/app/app.config.ts` :
 
 ```ts
-providers: [provideRouter(appRoutes, withComponentInputBinding())],
+provideRouter(routes, withComponentInputBinding()),
 ```
 
 Dans un template, `routerLink` remplace `href` : la navigation se fait sans recharger la page. `routerLinkActive` ajoute une classe au lien de la page courante.

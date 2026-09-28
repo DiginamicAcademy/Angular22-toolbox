@@ -15,7 +15,8 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { App } from './app/app';
 
-bootstrapApplication(App, appConfig);
+bootstrapApplication(App, appConfig)
+  .catch((err) => console.error(err));
 ```
 
 `src/index.html` contient la balise du composant racine :
@@ -24,17 +25,18 @@ bootstrapApplication(App, appConfig);
 <app-root></app-root>
 ```
 
-Au chargement, `bootstrapApplication` crée le composant `App` et l'affiche dans `<app-root>`. Tout le reste de l'application vit à l'intérieur de ce composant.
+Au chargement, `bootstrapApplication` crée le composant `App` et l'affiche dans `<app-root>` ; en cas d'échec, `catch` affiche l'erreur dans la console. Tout le reste de l'application vit à l'intérieur de ce composant.
 
 ### 2. Le composant racine et sa configuration
 
-`src/app/app.ts` — le composant racine, souvent une simple coquille autour du routeur :
+`src/app/app.ts` — le composant racine. La CLI le génère avec une page de démonstration ; une fois celle-ci retirée, il n'est qu'une coquille autour du routeur :
 
 ```ts
 @Component({
-  selector: 'app-root',
   imports: [RouterOutlet],
-  template: `<router-outlet />`,
+  selector: 'app-root',
+  styleUrl: './app.css',
+  templateUrl: './app.html', // ne contient plus que <router-outlet />
 })
 export class App {}
 ```
@@ -43,7 +45,10 @@ export class App {}
 
 ```ts
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(appRoutes)],
+  providers: [
+    provideBrowserGlobalErrorListeners(), // transmet les erreurs non capturées à Angular
+    provideRouter(routes),                // routes : la table de app.routes.ts
+  ],
 };
 ```
 
@@ -63,7 +68,7 @@ flowchart TD
 |---|---|
 | `src/main.ts` | Point d'entrée : démarre l'application |
 | `src/index.html` | Page hôte, balise du composant racine |
-| `src/app/app.ts` | Composant racine (coquille) |
+| `src/app/app.ts` | Composant racine (coquille), avec `app.html` et `app.css` |
 | `src/app/app.config.ts` | Providers : routeur, HTTP… |
 | `src/app/app.routes.ts` | Table des routes |
 | `src/app/features/` | Les pages et leurs composants |

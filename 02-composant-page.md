@@ -12,10 +12,10 @@ Le composant est la brique d'interface d'Angular : une classe (l'état et la log
 
 ```ts
 @Component({
-  selector: 'app-dev-card',        // la balise : <app-dev-card />
   imports: [DevAvatar],            // composants, directives et pipes utilisés
-  templateUrl: './dev-card.html',  // ou template: `...` en ligne
+  selector: 'app-dev-card',        // la balise : <app-dev-card />
   styleUrl: './dev-card.css',      // ou styles: `...`
+  templateUrl: './dev-card.html',  // ou template: `...` en ligne
 })
 export class DevCard {
   readonly dev = input.required<Dev>();       // entrée obligatoire

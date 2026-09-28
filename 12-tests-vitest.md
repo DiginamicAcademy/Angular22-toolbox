@@ -1,4 +1,4 @@
-[← 11 · WebSocket](11-websocket.md) · [Sommaire](Readme.md)
+[← 11 · WebSocket](11-websocket.md) · [Sommaire](Readme.md) · [13 · Générer du code →](13-generer-du-code.md)
 
 # Les tests avec Vitest
 
@@ -112,4 +112,4 @@ Le domaine (`domain/`) se teste sans Angular : c'est le signe qu'il est bien iso
 
 ---
 
-[← 11 · WebSocket](11-websocket.md) · [Sommaire](Readme.md)
+[← 11 · WebSocket](11-websocket.md) · [Sommaire](Readme.md) · [13 · Générer du code →](13-generer-du-code.md)

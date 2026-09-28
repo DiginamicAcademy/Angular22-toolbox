@@ -1,6 +1,6 @@
 # Angular 22 — Toolbox
 
-12 fiches notions Angular 22 : la référence rapide du cours [Angular](https://github.com/DiginamicAcademy/Angular) (CDA).
+12 fiches notions Angular 22 et un mémo de génération de code : la référence rapide du cours [Angular](https://github.com/DiginamicAcademy/Angular) (CDA).
 
 Une fiche = une notion, résumée à l'essentiel. Pour apprendre Angular en construisant, suivez le cours : le projet Pokedev d'abord, puis Time To en autonomie.
 
@@ -20,8 +20,9 @@ Une fiche = une notion, résumée à l'essentiel. Pour apprendre Angular en cons
 | 10 | [La gestion de session](10-gestion-session.md) | Authentification, gardes, jeton, intercepteur |
 | 11 | [WebSocket](11-websocket.md) | Temps réel, reconnexion, signaux |
 | 12 | [Les tests avec Vitest](12-tests-vitest.md) | `ng test`, spec, `TestBed`, couverture |
+| 13 | [Générer du code](13-generer-du-code.md) | `ng generate`, options, snippets par type |
 
-Les fiches suivent une progression — chacune s'appuie sur les précédentes — mais chacune se lit seule.
+Les fiches suivent une progression — chacune s'appuie sur les précédentes — mais chacune se lit seule. La fiche 13 est un mémo, à garder sous la main dès la fiche 02.
 
 ## Versions
 

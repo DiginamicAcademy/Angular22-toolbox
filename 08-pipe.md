@@ -20,11 +20,11 @@ Les formats dépendent de la **locale** (langue et conventions régionales). Pou
 
 ### 2. Un pipe personnalisé
 
-`src/app/shared/dex-number.ts`
+`src/app/shared/dex-number-pipe.ts`
 
 ```ts
 @Pipe({ name: 'dexNumber' })
-export class DexNumber implements PipeTransform {
+export class DexNumberPipe implements PipeTransform {
   transform(value: number): string {
     return dexNumber(value); // délégation à une fonction du domaine
   }
