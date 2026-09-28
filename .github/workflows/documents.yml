@@ -544,6 +544,13 @@ jobs:
       # md-to-pdf rendrait un bloc mermaid en bloc de code brut : mermaid-cli le
       # remplace d'abord par un SVG. L'étape lance un Chrome, donc on la saute
       # quand le document assemblé ne contient aucun diagramme.
+      #
+      # Par défaut, mermaid produit des SVG en `width="100%"`, sans taille
+      # propre : dans le PDF, chaque diagramme s'étire alors sur toute la
+      # largeur de la page, et un diagramme vertical (`flowchart TD`) déborde
+      # sur deux ou trois pages. `useMaxWidth: false` leur rend leur taille
+      # naturelle ; la feuille de style du support les réduit ensuite, si
+      # besoin, à la zone imprimable.
       - name: Rendre les diagrammes mermaid
         working-directory: build
         run: |
@@ -552,9 +559,27 @@ jobs:
             exit 0
           fi
           export PUPPETEER_EXECUTABLE_PATH="$CHROME_BIN"
+
+          # Une clé par type de diagramme : mermaid n'a pas de réglage global.
+          cat > mermaid-config.json <<'JSON'
+          {
+            "flowchart": { "useMaxWidth": false },
+            "sequence": { "useMaxWidth": false },
+            "class": { "useMaxWidth": false },
+            "state": { "useMaxWidth": false },
+            "er": { "useMaxWidth": false },
+            "gantt": { "useMaxWidth": false },
+            "journey": { "useMaxWidth": false },
+            "timeline": { "useMaxWidth": false },
+            "mindmap": { "useMaxWidth": false },
+            "pie": { "useMaxWidth": false }
+          }
+          JSON
+
           # Sortie dans un fichier distinct puis renommage : mermaid-cli ne
           # garantit pas de savoir lire et écrire le même fichier.
           npx --yes "@mermaid-js/mermaid-cli@${MERMAID_CLI_VERSION}" \
+            --configFile mermaid-config.json \
             --input support-de-cours.md \
             --output support-avec-diagrammes.md
           mv support-avec-diagrammes.md support-de-cours.md
@@ -706,6 +731,22 @@ jobs:
             font-weight: 700;
             line-height: 1.35;
             max-width: 80%;
+          }
+          /* Diagrammes mermaid, rendus en SVG à leur taille naturelle : jamais
+             plus larges que la colonne, ni plus hauts que la zone imprimable
+             (253 mm, marge de sécurité comprise). Une image ne se coupe pas :
+             si elle ne tient pas en bas de page, elle passe entière à la
+             suivante. Les proportions sont conservées. Le logo de la page de
+             garde, en data URI, ne correspond pas au sélecteur. */
+          img[src$=".svg"] {
+            display: block;
+            max-width: 100%;
+            max-height: 235mm;
+            width: auto;
+            height: auto;
+            margin: 0 auto;
+            break-inside: avoid;
+            page-break-inside: avoid;
           }
           CSS
 
