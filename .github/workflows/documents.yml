@@ -502,9 +502,12 @@ jobs:
 
           node build/rewrite-links.js build/support-de-cours.md build/anchors.tsv
 
-          # Garde-fou : plus aucun lien ne doit pointer vers un fichier .md.
-          if grep -n '](\S*\.md' build/support-de-cours.md; then
-            echo "::error::Des liens vers des fichiers .md subsistent dans le support."
+          # Garde-fou : plus aucun lien relatif ne doit pointer vers un fichier
+          # .md. Les URL absolues sont exclues, comme dans le script : un lien
+          # vers le `.md` d'un autre dépôt (le cours, sur GitHub) reste un lien
+          # web valide dans le PDF.
+          if grep -nP '\]\(\s*(?!(?i:https?:|mailto:|tel:)|#)\S*\.md' build/support-de-cours.md; then
+            echo "::error::Des liens relatifs vers des fichiers .md subsistent dans le support."
             exit 1
           fi
 
