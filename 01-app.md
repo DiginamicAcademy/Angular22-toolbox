@@ -2,7 +2,7 @@
 
 # L'application
 
-Une application Angular démarre comme n'importe quelle page web : le navigateur charge `index.html`, qui déclenche le démarrage du framework. Le composant racine s'affiche, le routeur prend le relais. Savoir ce qui se passe entre les deux, c'est savoir où ranger chaque chose — et où chercher quand rien ne s'affiche.
+Une application Angular démarre comme une page web : le navigateur charge `index.html`, puis le script compilé depuis `main.ts` lance le framework. Le composant racine s'affiche, et le routeur y insère la page demandée. Connaître ce trajet, c'est savoir où ranger chaque chose — et où chercher quand rien ne s'affiche.
 
 ## L'essentiel
 
@@ -24,11 +24,11 @@ bootstrapApplication(App, appConfig);
 <app-root></app-root>
 ```
 
-Au chargement, `main.ts` instancie `App` et l'insère dans `<app-root>`. Tout le reste de l'application vit à l'intérieur de ce composant.
+Au chargement, `bootstrapApplication` crée le composant `App` et l'affiche dans `<app-root>`. Tout le reste de l'application vit à l'intérieur de ce composant.
 
 ### 2. Le composant racine et sa configuration
 
-`src/app/app.ts` — le composant racine, souvent réduit à la coquille de l'application :
+`src/app/app.ts` — le composant racine, souvent une simple coquille autour du routeur :
 
 ```ts
 @Component({
@@ -39,7 +39,7 @@ Au chargement, `main.ts` instancie `App` et l'insère dans `<app-root>`. Tout le
 export class App {}
 ```
 
-`src/app/app.config.ts` — les **providers** de l'application, déclarés une seule fois :
+`src/app/app.config.ts` — les **providers** : les fonctionnalités mises à disposition de toute l'application (routeur, HTTP…), déclarées une seule fois :
 
 ```ts
 export const appConfig: ApplicationConfig = {
@@ -67,14 +67,16 @@ flowchart TD
 | `src/app/app.config.ts` | Providers : routeur, HTTP… |
 | `src/app/app.routes.ts` | Table des routes |
 | `src/app/features/` | Les pages et leurs composants |
-| `src/app/domain/` | Le métier, sans aucun import Angular |
+| `src/app/domain/` | Le code métier, sans aucun import Angular |
 
-Angular 22 fonctionne **sans zone.js** (*zoneless*) : la détection de changements repose sur les signaux — quand un signal lu dans un template change, Angular met à jour ce composant, et lui seul.
+### 5. Sans zone.js
+
+Historiquement, Angular s'appuyait sur la bibliothèque zone.js pour savoir quand rafraîchir l'écran. Angular 22 s'en passe (*zoneless*) : la détection de changements repose sur les signaux — quand un signal lu dans un template change, Angular met à jour ce composant, et lui seul.
 
 ## Pièges courants
 
-- **Ouvrir `index.html` directement dans le navigateur** : rien ne s'exécute. Une application Angular se sert avec `ng serve`, se construit avec `ng build`.
-- **Mettre des providers dans le composant racine** plutôt que dans `app.config.ts` : ils ne seraient fournis qu'à ce composant et à ses descendants.
+- **Ouvrir `index.html` directement dans le navigateur** : page blanche, rien ne s'exécute. En développement, on lance `ng serve` ; pour publier, `ng build`.
+- **Déclarer les providers dans le composant racine** plutôt que dans `app.config.ts` : les services, gardes et intercepteurs ne les voient pas, et `provideRouter()` y est même refusé.
 - **Chercher un `AppModule`** : les applications Angular 22 n'ont plus de module global — les composants sont *standalone* et importent directement ce qu'ils utilisent.
 
 ## Approfondir

@@ -2,7 +2,7 @@
 
 # Les services
 
-Un service porte la logique et l'état **partagés** : données, appels HTTP, état d'une équipe. L'**injection de dépendances** fournit les instances : un composant demande `Team`, Angular lui donne *la* instance — toujours la même, créée une seule fois.
+Un service porte la logique et l'état **partagés** : données, appels HTTP, état d'une équipe. L'**injection de dépendances** fournit les instances : quand un composant demande `Team`, Angular lui donne l'instance unique, créée une seule fois et partagée par tous.
 
 ## L'essentiel
 
@@ -27,9 +27,9 @@ export class Team {
 }
 ```
 
-- `@Service()` (Angular 22) remplace `@Injectable({ providedIn: 'root' })`, que vous verrez dans du code existant.
-- `providedIn: 'root'` : une instance unique pour toute l'application, créée seulement si quelqu'un la demande.
-- `inject()` s'appelle dans un champ — jamais d'injection par paramètre de constructeur.
+- `@Service()` (Angular 22) remplace `@Injectable({ providedIn: 'root' })`, que vous croiserez dans du code existant.
+- Le service est un **singleton** : une seule instance pour toute l'application, créée à la première demande.
+- `inject()` s'appelle à l'initialisation d'un champ : c'est la forme moderne, qui remplace l'injection par le constructeur.
 
 ### 2. Demander un service
 
@@ -42,6 +42,8 @@ export class DexPage {
 
 ### 3. Qui fournit quoi
 
+Selon l'endroit où il est fourni, un service est partagé par toute l'application ou propre à un composant :
+
 ```mermaid
 flowchart TD
     A["app.config.ts — providers de l'application"] --> B[Routeur, HTTP, intercepteurs]
@@ -51,7 +53,7 @@ flowchart TD
 
 ### 4. Les valeurs qui ne sont pas des classes
 
-Pour injecter une configuration (une URL, un paramètre), on utilise un `InjectionToken` :
+Pour injecter une simple valeur (une URL, un paramètre de configuration), on crée un `InjectionToken` :
 
 ```ts
 export const API_URL = new InjectionToken<string>('api.url');
@@ -61,9 +63,9 @@ export const API_URL = new InjectionToken<string>('api.url');
 
 ## Pièges courants
 
-- **Reconnaître `@Injectable` sans paniquer** : c'est la forme historique du même service — les deux cohabitent.
-- **Garder l'état dans un composant** : dès que deux composants doivent le voir, il monte dans un service.
-- **Appeler `inject()` hors contexte** (dans un callback, après l'initialisation) : erreur — capturez la dépendance dans un champ.
+- **S'étonner de voir `@Injectable`** : c'est la forme historique du même service — les deux cohabitent.
+- **Garder dans un composant un état partagé** : dès que deux composants en ont besoin, il passe dans un service.
+- **Appeler `inject()` hors contexte d'injection** (dans un callback, une méthode) : Angular lève une erreur. Injectez dans un champ, puis utilisez ce champ.
 
 ## Approfondir
 

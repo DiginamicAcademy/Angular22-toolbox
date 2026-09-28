@@ -2,7 +2,7 @@
 
 # La gestion de session
 
-Qui est connecté ? La session regroupe trois briques : un **service** qui détient l'utilisateur et le jeton, une **garde** qui écarte les visiteurs non connectés des pages privées, un **intercepteur** qui joint le jeton à chaque appel. Cette fiche va au-delà du cours — le projet Pokedev n'a pas de connexion.
+La session répond à la question « qui est connecté ? ». Elle repose sur trois briques : un **service** qui détient l'utilisateur et son **jeton** (la preuve d'identité remise par le serveur à la connexion), une **garde** qui écarte les visiteurs non connectés des pages privées, et un **intercepteur** qui joint le jeton à chaque appel. Cette fiche va au-delà du cours : le projet Pokedev n'a pas de connexion.
 
 ## L'essentiel
 
@@ -18,8 +18,9 @@ export class Session {
   // clé versionnée : changer de format = changer de clé (session.v2)
   // storedToken() : lit la clé dans localStorage, null si absente
   readonly token = signal<string | null>(storedToken('session.v1'));
+  // user est vide après un rafraîchissement (à recharger via l'API) : seul le jeton fait foi
   readonly user = signal<User | null>(null);
-  readonly isLoggedIn = computed(() => this.user() !== null);
+  readonly isLoggedIn = computed(() => this.token() !== null);
 
   async login(email: string, password: string): Promise<void> {
     const { token, user } = await firstValueFrom(
@@ -38,9 +39,11 @@ export class Session {
 }
 ```
 
-L'état de session est en **signaux** : templates et gardes le lisent réactivement.
+L'état de session tient dans des **signaux** : templates et gardes le lisent, et réagissent quand il change.
 
 ### 2. La garde d'authentification
+
+Si l'utilisateur n'est pas connecté, la garde renvoie une `UrlTree` qui le redirige vers la page de connexion :
 
 `src/app/core/session/auth-guard.ts`
 
@@ -51,11 +54,15 @@ export const authGuard: CanActivateFn = () => {
 };
 ```
 
+On l'attache à chaque route privée :
+
 ```ts
 { path: 'admin', canActivate: [authGuard], loadComponent: () => import('./features/admin/admin-page').then((m) => m.AdminPage) },
 ```
 
 ### 3. L'intercepteur de jeton
+
+Chaque requête sortante reçoit l'en-tête `Authorization` si un jeton existe. Une requête est immuable : on la `clone()` pour la modifier.
 
 `src/app/core/session/token-interceptor.ts`
 
@@ -78,13 +85,13 @@ flowchart TD
     F -->|401| G[Session expirée — logout]
 ```
 
-Une garde améliore l'expérience utilisateur, elle ne **sécurise** rien : le jeton seul décide côté serveur, et chaque réponse `401` doit déconnecter proprement.
+Une garde améliore l'expérience, elle ne **sécurise** rien : c'est le serveur qui vérifie le jeton. Côté client, une réponse `401` (jeton expiré ou invalide) doit déconnecter proprement l'utilisateur.
 
 ## Pièges courants
 
-- **Stocker le mot de passe** : jamais. Le jeton seul — et de préférence en **cookie httpOnly** (inaccessible au JavaScript) si votre serveur le permet ; `localStorage` reste lisible par toute faille XSS.
-- **Garder l'état après déconnexion** : `logout()` vide le jeton **et** l'utilisateur.
-- **Protéger l'affichage, pas les données** : des routes gardées côté front n'empêchent rien côté API — chaque requête serveur doit vérifier le jeton.
+- **Stocker le mot de passe** : jamais, seulement le jeton. Idéalement dans un **cookie httpOnly** (inaccessible au JavaScript) si le serveur le permet : `localStorage` est lisible par n'importe quel script injecté (faille XSS).
+- **Oublier une partie de l'état à la déconnexion** : `logout()` efface le jeton stocké, le signal du jeton **et** l'utilisateur.
+- **Croire que la garde protège les données** : l'API reste accessible sans passer par l'interface — le serveur doit vérifier le jeton à chaque requête.
 
 ## Approfondir
 

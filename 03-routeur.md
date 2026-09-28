@@ -2,7 +2,7 @@
 
 # Le routeur
 
-Le routeur fait correspondre l'URL à une page : chaque adresse affiche un composant dans `<router-outlet />`, sans rechargement. L'URL devient un état de l'application — partageable, marquable, restaurée au rechargement.
+Le routeur associe chaque URL à une page : l'adresse affiche un composant dans `<router-outlet />`, sans recharger la page. L'URL devient un état de l'application : on peut la partager, la mettre en favori, et elle survit à un rafraîchissement.
 
 ## L'essentiel
 
@@ -21,8 +21,9 @@ export const appRoutes: Routes = [
 ];
 ```
 
-- `loadComponent` charge la page **à la demande** (*chargement différé*) : elle n'entre dans le bundle initial que si l'utilisateur la visite.
-- `''` est la route racine ; `'**'` attrape tout le reste — toujours en **dernier**.
+- `:id` déclare un **paramètre** : `/devs/7` affiche `DevPage` avec l'identifiant `'7'`.
+- `loadComponent` charge la page **à la demande** (*chargement différé*) : elle est exclue du bundle initial et téléchargée seulement quand l'utilisateur la visite.
+- `''` est la route racine ; `'**'` attrape toutes les autres URL : placez-la toujours en **dernier**.
 
 ### 2. La navigation
 
@@ -34,13 +35,13 @@ flowchart LR
     D --> E[Affichage dans router-outlet]
 ```
 
-`src/app/app.config.ts`
+Le routeur est activé dans `src/app/app.config.ts` :
 
 ```ts
 providers: [provideRouter(appRoutes, withComponentInputBinding())],
 ```
 
-Dans un template :
+Dans un template, `routerLink` remplace `href` : la navigation se fait sans recharger la page. `routerLinkActive` ajoute une classe au lien de la page courante.
 
 ```html
 <a routerLink="/devs" routerLinkActive="active">Pokédex</a>
@@ -59,7 +60,7 @@ export class DevPage {
 }
 ```
 
-Un paramètre d'URL est toujours une chaîne : `numberAttribute` le convertit.
+Un paramètre d'URL est toujours une chaîne : `numberAttribute` le convertit en nombre. D'où les deux types de `input.required<number, string>` : le type exposé, puis le type reçu.
 
 ### 4. Les gardes
 
@@ -67,9 +68,9 @@ Un paramètre d'URL est toujours une chaîne : `numberAttribute` le convertit.
 |---|---|---|
 | `CanActivateFn` | Peut-on entrer sur cette route ? | `true`, `false` ou une redirection (`UrlTree`) |
 | `CanDeactivateFn` | Peut-on quitter cette page ? | `true` ou `false` |
-| `ResolveFn` | Quelle donnée calculer avant l'affichage ? | une valeur |
+| `ResolveFn` | Quelle donnée charger avant l'affichage ? | une valeur |
 
-Ce sont des **fonctions** ; elles peuvent appeler `inject()`.
+Les gardes sont de simples **fonctions**, qui peuvent appeler `inject()`. Celle-ci redirige vers la page introuvable si l'identifiant n'est pas valide :
 
 `src/app/core/dev-id-guard.ts`
 
@@ -80,12 +81,14 @@ export const devIdGuard: CanActivateFn = (route) => {
 };
 ```
 
+On l'attache à la route avec `canActivate: [devIdGuard]`.
+
 ## Pièges courants
 
-- **Oublier `provideRouter`** : les `routerLink` ne se comportent pas comme des liens.
+- **Oublier `provideRouter`** : le routeur ne connaît aucune route, et la navigation échoue avec une erreur dans la console.
 - **Placer `'**'` avant les autres routes** : elle les avale toutes.
-- **Lire un paramètre comme un nombre** : c'est une chaîne — `numberAttribute` en entrée, ou `Number()` explicite.
-- **Protéger des données avec une garde** : une garde améliore l'expérience, elle ne **sécurise** rien — la vraie protection est côté serveur.
+- **Traiter un paramètre comme un nombre** : c'est une chaîne — convertissez-le (`numberAttribute` en entrée, ou `Number()`).
+- **Compter sur une garde pour protéger des données** : une garde améliore l'expérience, elle ne **sécurise** rien — la vraie protection est côté serveur.
 
 ## Approfondir
 

@@ -16,7 +16,7 @@ Un **pipe** transforme une valeur pour l'affichage : `{{ dev.createdAt | date:'d
 | `percent` | `{{ score \| percent }}` | 75 % |
 | `json` | `{{ dev \| json }}` | le JSON brut (débogage) |
 
-Les formats dépendent de la **locale** : pour des dates françaises, l'application enregistre la locale `fr` au démarrage.
+Les formats dépendent de la **locale** (langue et conventions régionales). Pour des dates et des nombres à la française, l'application enregistre la locale `fr` au démarrage (`registerLocaleData` et le token `LOCALE_ID`).
 
 ### 2. Un pipe personnalisé
 
@@ -35,11 +35,11 @@ export class DexNumber implements PipeTransform {
 <span>N° {{ dev.id | dexNumber }}</span>
 ```
 
-Le pipe délègue à une **fonction du domaine** : la logique reste testable sans Angular, le pipe n'est que l'adaptateur de template.
+Le pipe délègue à une **fonction du domaine** : la logique reste testable sans Angular, le pipe n'est qu'un adaptateur pour le template. Comme un composant, il s'ajoute aux `imports` de celui qui l'utilise.
 
 ### 3. Pur ou impur
 
-Un pipe **pur** (défaut) ne se recalcule que si son entrée change **par référence**. Un pipe **impur** (`pure: false`) se recalcule à chaque cycle — à réserver aux cas qui l'exigent vraiment, car il coûte.
+Un pipe **pur** (par défaut) ne se recalcule que si son entrée change de **référence**. Un pipe **impur** (`pure: false`) se recalcule à chaque détection de changements : coûteux, il est à réserver aux rares cas qui l'exigent.
 
 ## Pièges courants
 

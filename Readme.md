@@ -1,8 +1,8 @@
 # Angular 22 — Toolbox
 
-12 fiches notions Angular 22, la référence rapide du cours [Angular](https://github.com/DiginamicAcademy/Angular) (CDA).
+12 fiches notions Angular 22 : la référence rapide du cours [Angular](https://github.com/DiginamicAcademy/Angular) (CDA).
 
-Chaque fiche présente une notion importante du framework : à quoi elle sert, quand l'utiliser, l'essentiel du code, les pièges courants. Une fiche = une notion, lisible seule ; pour apprendre Angular en construisant, suivez le cours — le projet Pokedev d'abord, puis Time To en autonomie.
+Une fiche = une notion, résumée à l'essentiel. Pour apprendre Angular en construisant, suivez le cours : le projet Pokedev d'abord, puis Time To en autonomie.
 
 ## Sommaire
 
@@ -21,21 +21,21 @@ Chaque fiche présente une notion importante du framework : à quoi elle sert, q
 | 11 | [WebSocket](11-websocket.md) | Temps réel, reconnexion, signaux |
 | 12 | [Les tests avec Vitest](12-tests-vitest.md) | `ng test`, spec, `TestBed`, couverture |
 
-Ce tableau est le sommaire de la toolbox : il tient lieu de plan. Les fiches se suivent dans l'ordre — chacune s'appuie sur les notions des précédentes — mais chacune reste lisible seule.
+Les fiches suivent une progression — chacune s'appuie sur les précédentes — mais chacune se lit seule.
 
 ## Versions
 
 Angular 22, TypeScript 6, Vitest 4, RxJS 7.8, Node.js 22 ou 24 LTS.
 
-Angular publie une version majeure environ tous les six mois. La commande `npm view @angular/cli version` affiche la version courante.
+Angular publie une version majeure environ tous les six mois ; `npm view @angular/cli version` affiche la dernière publiée.
 
 ## Comment lire une fiche
 
 Chaque fiche suit le même plan :
 
-- **À quoi ça sert** — la notion en deux phrases, et quand l'utiliser.
-- **L'essentiel** — le code minimal qui couvre l'essentiel des usages.
+- **Introduction** — à quoi sert la notion, et quand l'utiliser.
+- **L'essentiel** — le code minimal, qui couvre la plupart des usages.
 - **Pièges courants** — les erreurs classiques de débutant.
 - **Approfondir** — la documentation officielle, et le chapitre du cours qui traite la notion en détail.
 
-Les fiches 10 (session) et 11 (WebSocket) vont au-delà du cours ; la fiche 09 y ajoute les mutations (`POST`) et le transport Fetch. Elles complètent le socle pour des applications réelles, avec l'appui des chapitres 06 (services, HTTP, intercepteur) et 09 (état, persistance).
+Certaines fiches dépassent le cours : les fiches 10 (session) et 11 (WebSocket) entièrement, la fiche 09 en partie (mutations `POST`, transport Fetch). Elles préparent aux applications réelles, en s'appuyant sur les chapitres 06 (services, HTTP, intercepteur) et 09 (état, persistance) du cours.

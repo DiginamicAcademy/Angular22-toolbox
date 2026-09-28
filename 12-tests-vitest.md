@@ -2,13 +2,13 @@
 
 # Les tests avec Vitest
 
-Tester, c'est vérifier le **comportement** sans cliquer : une fonction pure, un service, un composant. Vitest est le lanceur de tests par défaut des projets Angular 22 — `ng test` le démarre, rien à installer.
+Un test vérifie automatiquement un **comportement** — celui d'une fonction pure, d'un service ou d'un composant — sans avoir à cliquer dans l'application. Vitest est le lanceur de tests par défaut des projets Angular 22 : `ng test` le démarre, rien à installer.
 
 ## L'essentiel
 
 ### 1. Un fichier de test
 
-Les fichiers se nomment `*.spec.ts`, à côté du fichier testé.
+Un fichier de test se nomme `*.spec.ts` et se place à côté du fichier testé.
 
 `src/app/domain/score.spec.ts`
 
@@ -27,13 +27,15 @@ describe('score', () => {
 });
 ```
 
+`describe` regroupe des tests, `it` en décrit un, `expect` vérifie un résultat. `it.each` rejoue le même test sur plusieurs jeux de données.
+
 ### 2. Les commandes
 
 | Commande | Effet |
 |---|---|
-| `npx ng test` | Lance les tests en continu (watch) |
-| `npx ng test --watch=false` | Une seule passe |
-| `npx ng test --watch=false --coverage` | Mesure la couverture |
+| `npx ng test` | Lance les tests et les relance à chaque modification (*watch*) |
+| `npx ng test --watch=false` | Lance les tests une seule fois |
+| `npx ng test --watch=false --coverage` | Mesure aussi la couverture du code |
 
 ### 3. Tester un service avec TestBed
 
@@ -41,6 +43,12 @@ describe('score', () => {
 
 ```ts
 describe('Team', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideHttpClient(), provideHttpClientTesting()], // Team charge ses devs par HTTP
+    });
+  });
+
   it('ajoute puis retire un dev', () => {
     const team = TestBed.inject(Team);
     team.toggle(1);
@@ -51,7 +59,9 @@ describe('Team', () => {
 });
 ```
 
-Un service qui en injecte d'autres (le `Team` de la fiche 06 charge ses devs) exige leurs doublures — `provideHttpClientTesting()` ci-dessous. Quand le service lit une **ressource** (`httpResource`), l'ordre est `tick` → `flush` → `whenStable` : on fait avancer le temps, puis on attend que la ressource se stabilise.
+`TestBed.inject` fournit le service comme le ferait l'application, avec ses dépendances. Le `Team` de la fiche 06 charge ses devs par HTTP : `provideHttpClientTesting()` remplace alors le vrai serveur par une doublure (voir § 5).
+
+Si le service lit une **ressource** (`httpResource`), respectez l'ordre `tick` → `flush` → `whenStable` : `TestBed.tick()` déclenche la requête, `flush()` lui renvoie une réponse simulée, `whenStable()` attend que la ressource soit à jour.
 
 ### 4. Tester un composant
 
@@ -59,23 +69,26 @@ Un service qui en injecte d'autres (le `Team` de la fiche 06 charge ses devs) ex
 it('affiche un dev hors équipe', async () => {
   const fixture = TestBed.createComponent(DevCard);
   fixture.componentRef.setInput('dev', devFixture); // alimente une entrée
+  fixture.componentRef.setInput('team', []);        // équipe vide
   await fixture.whenStable();                       // attendre le rendu
   expect(fixture.componentInstance.inTeam()).toBe(false);
 });
 ```
 
-Avec une ressource dans le composant, `TestBed.tick()` fait avancer requêtes et rendu ensemble.
+Chaque entrée obligatoire (`input.required`) doit recevoir une valeur avant le rendu, sinon Angular lève une erreur. Si le composant contient une ressource, `TestBed.tick()` déclenche à la fois les requêtes et le rendu.
 
 ### 5. Les doublures
 
 | Outil | Usage |
 |---|---|
-| `vi.spyOn(objet, 'méthode')` | Observer les appels |
-| `.mockReturnValue(x)` / `.mockResolvedValue(x)` | Remplacer un résultat |
+| `vi.spyOn(objet, 'méthode')` | Espionner une méthode : appels, arguments |
+| `.mockReturnValue(x)` / `.mockResolvedValue(x)` | Imposer la valeur renvoyée (ou la promesse résolue) |
 | `provideHttpClientTesting()` | Simuler les réponses HTTP |
-| `vi.restoreAllMocks()` | Rétablir les originaux |
+| `vi.restoreAllMocks()` | Rétablir les méthodes d'origine |
 
 ### 6. La pyramide
+
+Beaucoup de tests rapides, peu de tests coûteux :
 
 ```mermaid
 flowchart TD
@@ -84,13 +97,13 @@ flowchart TD
     C --> D[Tests manuels — le plan de tests]
 ```
 
-Le domaine (`domain/`) se teste sans Angular — c'est le signe qu'il est bien isolé.
+Le domaine (`domain/`) se teste sans Angular : c'est le signe qu'il est bien isolé.
 
 ## Pièges courants
 
-- **Tester l'implémentation, pas le comportement** : on vérifie ce que la fonction **fait**, pas comment elle le fait.
-- **Oublier l'ordre `tick` → `flush` → `whenStable`** avec `httpResource` : le test lit un état de chargement.
-- **Mocker le domaine** : les fonctions pures se testent sans aucun doublon — si un test du domaine en réclame, le domaine a fui.
+- **Tester l'implémentation, pas le comportement** : on vérifie ce que le code **fait**, pas comment il le fait — le test survit ainsi aux refactorisations.
+- **Oublier l'ordre `tick` → `flush` → `whenStable`** avec `httpResource` : le test lit une ressource encore en chargement.
+- **Mocker le domaine** : les fonctions pures se testent sans doublure. Si un test du domaine en réclame une, c'est que le domaine dépend de ce qu'il ne devrait pas.
 
 ## Approfondir
 

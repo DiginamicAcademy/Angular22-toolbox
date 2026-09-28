@@ -2,7 +2,7 @@
 
 # Les appels HTTP
 
-Parler au serveur, c'est deux gestions : **charger** des données — et en Angular 22, `httpResource` expose la réponse directement en signaux — et **modifier** (`POST`, `DELETE`), qui passe par `HttpClient`.
+Parler au serveur recouvre deux besoins : **charger** des données, avec `httpResource`, qui expose la réponse sous forme de signaux ; et les **modifier** (`POST`, `DELETE`…), avec `HttpClient`.
 
 ## L'essentiel
 
@@ -24,10 +24,10 @@ export class DevRepository {
 ```
 
 - La fonction passée en premier argument est **réactive** : si elle lit un signal et que ce signal change, la requête est relancée. Si elle renvoie `undefined`, aucune requête n'est envoyée.
-- L'URL est **relative**, sans `/` initial : l'application fonctionnera aussi quand elle sera publiée dans un sous-dossier.
-- `parse` reçoit la réponse brute (`unknown`) et renvoie une valeur typée. C'est l'endroit où l'on **valide** les données. Si `parse` lève une erreur, la ressource passe en état d'erreur.
-- **Lire `value()` sur une ressource en erreur lève une exception.** On teste `hasValue()` avant, dans un `computed`.
-- `HttpClient` est disponible par défaut. `provideHttpClient()` ne sert qu'à ajouter des options, comme les intercepteurs.
+- L'URL est **relative**, sans `/` initial : l'application fonctionne aussi une fois publiée dans un sous-dossier.
+- `parse` reçoit la réponse brute (`unknown`) et renvoie une valeur typée. C'est là qu'on **valide** les données, à la *frontière* : l'endroit où elles entrent dans l'application. Si `parse` lève une erreur, la ressource passe en erreur.
+- **Lire `value()` sur une ressource en erreur lève une exception.** On teste d'abord `hasValue()`, dans un `computed`.
+- `HttpClient` est disponible par défaut : `provideHttpClient()` ne sert qu'à ajouter des options, comme les intercepteurs.
 
 ### 2. Le trajet d'une requête
 
@@ -53,9 +53,11 @@ async addDev(dev: Omit<Dev, 'id'>): Promise<void> {
 }
 ```
 
+`HttpClient` renvoie un `Observable` ; `firstValueFrom` le convertit en `Promise`, qu'on peut attendre avec `await`. Une fois la modification faite, `reload()` recharge les données.
+
 ### 4. Les intercepteurs
 
-Un intercepteur s'exécute pour **chaque** requête : ajout d'en-têtes, journalisation, indicateur de chargement, nouvelle tentative.
+Un intercepteur s'exécute pour **chaque** requête : idéal pour ajouter un en-tête, journaliser, afficher un indicateur de chargement ou retenter un appel.
 
 `src/app/core/loading-interceptor.ts`
 
@@ -74,14 +76,14 @@ Enregistrement dans `app.config.ts` :
 provideHttpClient(withInterceptors([loadingInterceptor])),
 ```
 
-Angular 22 envoie ses requêtes avec l'API **Fetch** du navigateur (fini XMLHttpRequest) ; `withXhr()` le rétablit si un cas l'exige.
+Angular 22 envoie ses requêtes avec l'API **Fetch** du navigateur, et non plus `XMLHttpRequest` ; `withXhr()` rétablit ce dernier si un cas l'exige.
 
 ## Pièges courants
 
 - **Ne pas valider la réponse** : sans `parse`, la donnée reste `unknown`. Validez à la frontière.
-- **Lire `value()` sans précaution** : sur une ressource en erreur, cela lève — passez par `hasValue()`.
-- **Oublier `reload()` après une modification** : la ressource affiche l'ancien état.
-- **Fabriquer un client HTTP générique** : une ressource = une donnée avec ses dépendances réactives, pas un fourre-tout pour tous les appels.
+- **Lire `value()` sans précaution** : sur une ressource en erreur, l'appel lève une exception — passez par `hasValue()`.
+- **Oublier `reload()` après une modification** : la ressource affiche toujours les anciennes données.
+- **Écrire un service HTTP fourre-tout** : une ressource correspond à une donnée et à ses dépendances réactives, pas à tous les appels de l'application.
 
 ## Approfondir
 

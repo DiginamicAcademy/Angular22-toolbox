@@ -2,7 +2,7 @@
 
 # Les directives
 
-Une directive change l'apparence ou le comportement d'un élément **existant**, sans créer de balise. Les **directives d'attribut** s'appliquent à un élément (`<span appTypeColor>`) ; les directives structurelles **historiques** (`*ngIf`, `*ngFor`) ajoutaient ou retiraient du template — en Angular 22, le **control flow** (`@if`, `@for`, `@defer`) les remplace.
+Une directive modifie l'apparence ou le comportement d'un élément **existant**, sans créer de balise. On écrit surtout des **directives d'attribut** (`<span appTypeColor>`). Les directives structurelles (`*ngIf`, `*ngFor`), qui ajoutaient ou retiraient des éléments, appartiennent au passé : en Angular 22, le **control flow** (`@if`, `@for`, `@defer`) les remplace.
 
 ## L'essentiel
 
@@ -29,12 +29,12 @@ export class TypeColor {
 ```
 
 - Le sélecteur entre **crochets** vise un attribut, pas une balise.
-- `host` lie la directive à son **élément hôte** : ici une variable CSS et un attribut `data-*`.
-- La directive lit une **entrée** comme un composant (`input.required`).
+- `host` déclare des liaisons sur l'**élément hôte** (celui qui porte l'attribut) : ici une variable CSS et un attribut `data-*`.
+- Comme un composant, la directive reçoit des **entrées** : celle qui porte le nom du sélecteur reçoit la valeur de l'attribut (`"frontend"`).
 
 ### 2. hostDirectives
 
-Un composant peut recevoir des directives d'hôte directement dans son décorateur :
+Un composant peut appliquer une directive à sa propre balise, sans que l'utilisateur ait à l'écrire :
 
 ```ts
 @Component({
@@ -44,9 +44,11 @@ export class DevBadge {}
 // <app-dev-badge type="frontend" /> — TypeColor s'applique à l'hôte
 ```
 
+`inputs` expose l'entrée de la directive sous un autre nom : ici `type`.
+
 ### 3. Le control flow remplace les structurelles
 
-`@if`, `@for`, `@switch`, `@defer` forment le **control flow** intégré (fiche [02 · Le composant de page](02-composant-page.md)). Les anciennes `*ngIf` / `*ngFor` étaient des directives structurelles — du **code historique** à savoir lire, à ne plus écrire.
+`@if`, `@for`, `@switch`, `@defer` forment le **control flow** intégré (fiche [02 · Le composant de page](02-composant-page.md)). Les anciennes directives structurelles `*ngIf` / `*ngFor` relèvent du **code historique** : à savoir lire, à ne plus écrire.
 
 ### 4. Le bon choix
 
@@ -58,9 +60,9 @@ export class DevBadge {}
 
 ## Pièges courants
 
-- **Sélecteur sans crochets** : `[appTypeColor]` cible un attribut ; `appTypeColor` créerait une balise — c'est un composant.
+- **Oublier les crochets du sélecteur** : `appTypeColor` sans crochets viserait une balise `<appTypeColor>`, pas un attribut.
 - **Oublier `host`** : sans liaisons d'hôte, la directive ne touche pas son élément.
-- **Réécrire `*ngIf`** : le control flow natif le remplace, sans import.
+- **Écrire encore `*ngIf` / `*ngFor`** : le control flow les remplace, sans import.
 
 ## Approfondir
 
