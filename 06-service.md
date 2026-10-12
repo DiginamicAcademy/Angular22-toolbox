@@ -1,4 +1,4 @@
-[← 05 · computed()](05-computed.md) · [Sommaire](Readme.md) · [07 · Les directives →](07-directive.md)
+[← Chapitre précédent](05-computed.md) · [Sommaire](Readme.md) · [Chapitre suivant →](07-directive.md)
 
 # Les services
 
@@ -74,4 +74,4 @@ export const API_URL = new InjectionToken<string>('api.url');
 
 ---
 
-[← 05 · computed()](05-computed.md) · [Sommaire](Readme.md) · [07 · Les directives →](07-directive.md)
+[← Chapitre précédent](05-computed.md) · [Sommaire](Readme.md) · [Chapitre suivant →](07-directive.md)

@@ -1,4 +1,4 @@
-[← 10 · La gestion de session](10-gestion-session.md) · [Sommaire](Readme.md) · [12 · Les tests avec Vitest →](12-tests-vitest.md)
+[← Chapitre précédent](10-gestion-session.md) · [Sommaire](Readme.md) · [Chapitre suivant →](12-tests-vitest.md)
 
 # WebSocket
 
@@ -106,4 +106,4 @@ export class NotificationsPage {
 
 ---
 
-[← 10 · La gestion de session](10-gestion-session.md) · [Sommaire](Readme.md) · [12 · Les tests avec Vitest →](12-tests-vitest.md)
+[← Chapitre précédent](10-gestion-session.md) · [Sommaire](Readme.md) · [Chapitre suivant →](12-tests-vitest.md)

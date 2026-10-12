@@ -1,4 +1,4 @@
-[← 04 · signal()](04-signal.md) · [Sommaire](Readme.md) · [06 · Les services →](06-service.md)
+[← Chapitre précédent](04-signal.md) · [Sommaire](Readme.md) · [Chapitre suivant →](06-service.md)
 
 # computed()
 
@@ -59,4 +59,4 @@ Un `computed` n'a ni `set` ni `update`. Pour un état dérivé **modifiable**, r
 
 ---
 
-[← 04 · signal()](04-signal.md) · [Sommaire](Readme.md) · [06 · Les services →](06-service.md)
+[← Chapitre précédent](04-signal.md) · [Sommaire](Readme.md) · [Chapitre suivant →](06-service.md)

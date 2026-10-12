@@ -1,4 +1,4 @@
-[← 02 · Le composant de page](02-composant-page.md) · [Sommaire](Readme.md) · [04 · signal() →](04-signal.md)
+[← Chapitre précédent](02-composant-page.md) · [Sommaire](Readme.md) · [Chapitre suivant →](04-signal.md)
 
 # Le routeur
 
@@ -97,4 +97,4 @@ On l'attache à la route avec `canActivate: [devIdGuard]`.
 
 ---
 
-[← 02 · Le composant de page](02-composant-page.md) · [Sommaire](Readme.md) · [04 · signal() →](04-signal.md)
+[← Chapitre précédent](02-composant-page.md) · [Sommaire](Readme.md) · [Chapitre suivant →](04-signal.md)

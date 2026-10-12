@@ -1,4 +1,4 @@
-[← 03 · Le routeur](03-routeur.md) · [Sommaire](Readme.md) · [05 · computed() →](05-computed.md)
+[← Chapitre précédent](03-routeur.md) · [Sommaire](Readme.md) · [Chapitre suivant →](05-computed.md)
 
 # signal()
 
@@ -62,4 +62,4 @@ readonly dev = input.required<Dev>();
 
 ---
 
-[← 03 · Le routeur](03-routeur.md) · [Sommaire](Readme.md) · [05 · computed() →](05-computed.md)
+[← Chapitre précédent](03-routeur.md) · [Sommaire](Readme.md) · [Chapitre suivant →](05-computed.md)

@@ -1,4 +1,4 @@
-[← 08 · Les pipes](08-pipe.md) · [Sommaire](Readme.md) · [10 · La gestion de session →](10-gestion-session.md)
+[← Chapitre précédent](08-pipe.md) · [Sommaire](Readme.md) · [Chapitre suivant →](10-gestion-session.md)
 
 # Les appels HTTP
 
@@ -92,4 +92,4 @@ Angular 22 envoie ses requêtes avec l'API **Fetch** du navigateur, et non plus 
 
 ---
 
-[← 08 · Les pipes](08-pipe.md) · [Sommaire](Readme.md) · [10 · La gestion de session →](10-gestion-session.md)
+[← Chapitre précédent](08-pipe.md) · [Sommaire](Readme.md) · [Chapitre suivant →](10-gestion-session.md)

@@ -1,4 +1,4 @@
-[← 06 · Les services](06-service.md) · [Sommaire](Readme.md) · [08 · Les pipes →](08-pipe.md)
+[← Chapitre précédent](06-service.md) · [Sommaire](Readme.md) · [Chapitre suivant →](08-pipe.md)
 
 # Les directives
 
@@ -71,4 +71,4 @@ export class DevBadge {}
 
 ---
 
-[← 06 · Les services](06-service.md) · [Sommaire](Readme.md) · [08 · Les pipes →](08-pipe.md)
+[← Chapitre précédent](06-service.md) · [Sommaire](Readme.md) · [Chapitre suivant →](08-pipe.md)

@@ -1,4 +1,4 @@
-[← 01 · L'application](01-app.md) · [Sommaire](Readme.md) · [03 · Le routeur →](03-routeur.md)
+[← Chapitre précédent](01-app.md) · [Sommaire](Readme.md) · [Chapitre suivant →](03-routeur.md)
 
 # Le composant de page
 
@@ -90,4 +90,4 @@ Une page est un composant chargé par le routeur (fiche [03 · Le routeur](03-ro
 
 ---
 
-[← 01 · L'application](01-app.md) · [Sommaire](Readme.md) · [03 · Le routeur →](03-routeur.md)
+[← Chapitre précédent](01-app.md) · [Sommaire](Readme.md) · [Chapitre suivant →](03-routeur.md)

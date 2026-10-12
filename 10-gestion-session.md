@@ -1,4 +1,4 @@
-[← 09 · Les appels HTTP](09-appels-http.md) · [Sommaire](Readme.md) · [11 · WebSocket →](11-websocket.md)
+[← Chapitre précédent](09-appels-http.md) · [Sommaire](Readme.md) · [Chapitre suivant →](11-websocket.md)
 
 # La gestion de session
 
@@ -100,4 +100,4 @@ Une garde améliore l'expérience, elle ne **sécurise** rien : c'est le serveur
 
 ---
 
-[← 09 · Les appels HTTP](09-appels-http.md) · [Sommaire](Readme.md) · [11 · WebSocket →](11-websocket.md)
+[← Chapitre précédent](09-appels-http.md) · [Sommaire](Readme.md) · [Chapitre suivant →](11-websocket.md)

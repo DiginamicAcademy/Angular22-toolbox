@@ -1,4 +1,4 @@
-[← 07 · Les directives](07-directive.md) · [Sommaire](Readme.md) · [09 · Les appels HTTP →](09-appels-http.md)
+[← Chapitre précédent](07-directive.md) · [Sommaire](Readme.md) · [Chapitre suivant →](09-appels-http.md)
 
 # Les pipes
 
@@ -54,4 +54,4 @@ Un pipe **pur** (par défaut) ne se recalcule que si son entrée change de **ré
 
 ---
 
-[← 07 · Les directives](07-directive.md) · [Sommaire](Readme.md) · [09 · Les appels HTTP →](09-appels-http.md)
+[← Chapitre précédent](07-directive.md) · [Sommaire](Readme.md) · [Chapitre suivant →](09-appels-http.md)

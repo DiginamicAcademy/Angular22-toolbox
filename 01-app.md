@@ -1,4 +1,4 @@
-[Sommaire](Readme.md) · [02 · Le composant de page →](02-composant-page.md)
+[Sommaire](Readme.md) · [Chapitre suivant →](02-composant-page.md)
 
 # L'application
 
@@ -91,4 +91,4 @@ Historiquement, Angular s'appuyait sur la bibliothèque zone.js pour savoir quan
 
 ---
 
-[Sommaire](Readme.md) · [02 · Le composant de page →](02-composant-page.md)
+[Sommaire](Readme.md) · [Chapitre suivant →](02-composant-page.md)

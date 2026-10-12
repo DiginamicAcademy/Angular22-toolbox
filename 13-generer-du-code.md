@@ -1,4 +1,4 @@
-[← 12 · Les tests avec Vitest](12-tests-vitest.md) · [Sommaire](Readme.md)
+[← Chapitre précédent](12-tests-vitest.md) · [Sommaire](Readme.md)
 
 # Générer du code
 
@@ -220,4 +220,4 @@ Enregistrement dans `app.config.ts` : `provideHttpClient(withInterceptors([loggi
 
 ---
 
-[← 12 · Les tests avec Vitest](12-tests-vitest.md) · [Sommaire](Readme.md)
+[← Chapitre précédent](12-tests-vitest.md) · [Sommaire](Readme.md)
